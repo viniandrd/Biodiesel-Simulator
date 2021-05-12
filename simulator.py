@@ -33,10 +33,6 @@ class Simulator:
         reactor_active = Thread(target=self._active_reactor())
         reactor_active.start()
 
-        # Start the thread to process the reactor
-        process_reactor = Thread(target=self._process_reactor())
-        process_reactor.start()
-
         # Start the thread to launch to the decanter
         launch_reactor = Thread(target=self._launch_reactor())
         launch_reactor.start()
@@ -88,20 +84,7 @@ class Simulator:
                                                                         self.reactor.get_oil_volume(),
                                                                         self.reactor.get_naoh_volume(),
                                                                         self.reactor.get_etoh_volume()))
-                self.reactor.update()
-            else:
-                mutex.release()
-
-    def _process_reactor(self):
-        print('abriu process')
-        while True:
-            mutex.acquire()
-
-            if self.reactor.get_total_volume() >= 5.0:
-                mutex.release()
-                print('Reacotr {}'.format(self.reactor.get_total_volume()))
                 self.reactor.process()
-
             else:
                 mutex.release()
 
