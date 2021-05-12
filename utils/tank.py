@@ -7,7 +7,7 @@ class Tank:
         return self.substance
 
     def get_volume(self):
-        return self.substance
+        return self.volume
 
     def add_volume(self, value):
         self.volume += value
