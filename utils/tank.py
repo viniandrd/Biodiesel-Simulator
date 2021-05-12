@@ -11,3 +11,10 @@ class Tank:
 
     def add_volume(self, value):
         self.volume += value
+
+    def filter_volume(self, value):
+        if (self.volume - value >= 0):
+            self.volume -= value
+            return float(value)
+        else:
+            print('<<!!>> The tank does not have this volume available <<!!>>')
