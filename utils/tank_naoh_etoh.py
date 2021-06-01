@@ -1,19 +1,18 @@
 class Tank_NaOHEtOH:
     def __init__(self, id, naoh_volume, etoh_volume):
-        self._name = id
+        self.substance = id
         self._naoh_volume = naoh_volume
         self._etoh_volume = etoh_volume
         self._total_volume = self._naoh_volume + self._etoh_volume
 
     # ---- Get's
-    def get_name(self):
-        """Get the name of the Tank.
+    def get_substance(self):
+        """Get the substance in the Tank.
 
         :returns:
-        name (string): The name of the Tank.
+        substance (string): The name of the Tank.
         """
-
-        return self._name
+        return self.substance
 
     def get_naoh_volume(self):
         """Returns the amount of NaOH volume in it.

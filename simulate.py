@@ -7,6 +7,7 @@ from utils.washer import Washer
 from utils.logginprinter import LoggingPrinter
 from simulator import Simulator
 
+
 if __name__ == '__main__':
 
     oil_tank = Tank('Oil', 0.0)

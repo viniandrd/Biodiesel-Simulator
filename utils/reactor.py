@@ -11,6 +11,7 @@ class Reactor:
         self._total_volume = 0.0
         self._volume_processed = 0.0
         self._is_processing = False
+        self._is_resting = False
 
     # ---- Set's
     def add_volumes(self, naoh, etoh, oil):
@@ -31,6 +32,15 @@ class Reactor:
                                                                                           self._volumes['EtOH']))
 
     # ---- Get's
+
+    def is_resting(self):
+        """Returns the flag to know if reactor is resting.
+
+        :returns:
+        is_resting (bool): Flag
+        """
+        return self._is_resting
+
     def get_naoh_volume(self):
         """Returns the amount of NaOH volume in it.
 
