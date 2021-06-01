@@ -1,5 +1,5 @@
-from threading import Thread, Lock, Event
-import time, random, concurrent.futures
+from threading import Thread, Lock
+import time, random
 
 mutex1 = Lock()
 mutex2 = Lock()
@@ -33,6 +33,8 @@ class Simulator:
         self._running_threads = []
 
     def run(self):
+        """ Run the simulator.
+        Creates all necessary Threads"""
         global reactor_cycles
         self._run = True
         print('..: Simulator is running :..')
@@ -91,7 +93,7 @@ class Simulator:
 
 
     def _fill_oil(self):
-        #print('>>> Thread 1 - Oil')
+        """Fill Oil tank in each 10 seconds (Thread 1)."""
         while self._run:
             mutex1.acquire()
             volume = random.uniform(1.0, 2.0)
@@ -104,8 +106,8 @@ class Simulator:
 
 
     def _fill_naoh_etoh(self):
+        """Fill NaOH/EtOH tank in each 1 second (Thread 2)."""
         global next_volume_etoh
-        #print('>>> Thread 2 - Oil')
         while self._run:
             mutex2.acquire()
             volume_EtOH = 0.125
@@ -124,7 +126,7 @@ class Simulator:
 
 
     def _active_reactor(self):
-        #print('>>> Thread 3 - Reactor')
+        """Active reactor when the minimum volumes if reached. (Thread 3)."""
         while self._run:
             mutex3.acquire()
 
@@ -153,8 +155,8 @@ class Simulator:
                 mutex3.release()
 
     def _launch_reactor(self):
+        """Launch reactor when it's not resting. (Thread 4)."""
         global reactor_cycles
-        # print('>>> Thread 4 - Launch Reactor')
         while self._run:
             mutex4.acquire()
             if not self.reactor.is_resting() and self.reactor.get_volume_processed() >= 3.0:
@@ -167,6 +169,7 @@ class Simulator:
 
 
     def _exhaust_decanter(self):
+        """Exhaust decanter when it's ready. (Thread 4)."""
         global activate_washers
         while self._run:
             mutex5.acquire()
@@ -181,6 +184,7 @@ class Simulator:
                 mutex5.release()
 
     def _dry(self):
+        """Dry solution exhausted from Decanter and send to EtOH Tank. (Thread 5)."""
         while self._run:
             mutex6.acquire()
             # Verify if the volume is already in the Dryer 1
@@ -198,6 +202,7 @@ class Simulator:
                 mutex6.release()
 
     def _washers(self):
+        """Wash solution exhausted from Decanter (3x) (Thread 6)."""
         global activate_washers
         while self._run:
             mutex7.acquire()
@@ -224,6 +229,7 @@ class Simulator:
                 mutex7.release()
 
     def _final_dry(self):
+        """Dry solution exhausted from the Washer 3 (Thread 7)."""
         while self._run:
             mutex8.acquire()
             if self.dryers['Dryer 2'].ready():
@@ -233,8 +239,8 @@ class Simulator:
             else:
                 mutex8.release()
 
-    # Stop the simulator and threads
     def stop(self):
+        """Stop the Simulator"""
         # Stops running simulator.
         self._run = False
 

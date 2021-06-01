@@ -27,6 +27,6 @@ if __name__ == '__main__':
     simulator = Simulator(tank_oil=oil_tank, tank_naoh_etoh=naoh_etoh_tank, reactor=reactor, decanter=decanter,
                           tank_glycerin=glycerin_tank, washer_1=washer_1, washer_2=washer_2, washer_3=washer_3,
                           dryer_1=dryer_1, dryer_2=dryer_2, tank_etoh=etoh_tank, tank_biodiesel=biodiesel_tank)
+
     with LoggingPrinter("log.txt"):
         simulator.run()
-    #time.sleep(3600)
